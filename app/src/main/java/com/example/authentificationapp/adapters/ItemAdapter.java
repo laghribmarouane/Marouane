@@ -1,6 +1,7 @@
 package com.example.authentificationapp.adapters;
 
 import android.content.ClipData;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.authentificationapp.R;
+import com.example.authentificationapp.model.Category;
 import com.example.authentificationapp.model.Item;
+import com.squareup.picasso.Picasso;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class ItemAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
-    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Category> items = new ArrayList<>();
 
     @NonNull
     @Override
@@ -29,27 +33,23 @@ public class ItemAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.title.setText(items.get(position).getTitle());
-        holder.description.setText(items.get(position).getDescription());
-        holder.container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "item "+items.get(position).getTitle()+"clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+        Picasso.get().load(items.get(position).icon_url).into(holder.imageView);
+        holder.title.setText(items.get(position).name);
+        holder.description.setText(items.get(position).slug);
+
     }
 
     @NonNull
-
-
     @Override
     public int getItemCount() {
         return items.size();
     }
 
-    public void setItems(ArrayList<Item> items) {
+    public void setItems(ArrayList<Category> items) {
         this.items = items;
         notifyDataSetChanged();
     }
+
+
 
 }
